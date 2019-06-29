@@ -1,0 +1,64 @@
+ion-header
+  ion-toolbar
+    ion-buttons(slot='secondary')
+      ion-button
+        ion-icon(slot='icon-only', name='refresh')
+    ion-buttons(slot='primary')
+      ion-button
+        ion-icon(slot='icon-only', name='search')
+    ion-title Search
+
+ion-content
+  ion-list
+    ion-list-header
+      ion-label Free Text Search
+    ion-item
+      ion-input(placeholder="Search card body...", (change)="updateFilter()", [(ngModel)]="textSearch")
+  ion-list
+    ion-item(*ngFor="let card of cards; let i = index") {{card.name}}
+    //ion-list-header
+    //  ion-label Category Filters
+    //ion-item
+    //  ion-label Set
+    //  ion-select(multiple='true')
+    //    ion-select-option(value='ravnica') Ravnica
+    //    ion-select-option(value='ixilan') Ixilan
+    //    ion-select-option(value='kaladesh') Kaladesh
+    //    ion-select-option(value='m20') Magic Core 2020
+    //ion-item
+    //  ion-label Color
+    //  ion-select(multiple='true')
+    //    ion-select-option(value='w') White
+    //    ion-select-option(value='u') Blue
+    //    ion-select-option(value='b') Black
+    //    ion-select-option(value='r') Red
+    //    ion-select-option(value='g') Green
+    //    ion-select-option(value='c') Colorless
+    //ion-item
+    //  ion-label Produces
+    //  ion-select(multiple='true')
+    //    ion-select-option(value='w') White
+    //    ion-select-option(value='u') Blue
+    //    ion-select-option(value='b') Black
+    //    ion-select-option(value='r') Red
+    //    ion-select-option(value='g') Green
+    //    ion-select-option(value='c') Colorless
+    //ion-item
+    //  ion-label Type
+    //  ion-select(multiple='true')
+    //    ion-select-option(value='w') White
+    //    ion-select-option(value='u') Blue
+    //    ion-select-option(value='b') Black
+    //    ion-select-option(value='r') Red
+    //    ion-select-option(value='g') Green
+    //    ion-select-option(value='c') Colorless
+    //ion-item
+    //  ion-label Rarity
+    //  ion-select(multiple='true')
+    //    ion-select-option(value='w') White
+    //    ion-select-option(value='u') Blue
+    //    ion-select-option(value='b') Black
+    //    ion-select-option(value='r') Red
+    //    ion-select-option(value='g') Green
+    //    ion-select-option(value='c') Colorless
+

@@ -1,5 +1,7 @@
 {
   "name": "SwingFace",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
