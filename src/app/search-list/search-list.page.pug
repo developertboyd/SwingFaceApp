@@ -1,7 +1,7 @@
 ion-header
   ion-toolbar
     ion-buttons(slot='secondary')
-      ion-button(href='/')
+      ion-button([routerLink]="['/tabs/tab1']", routerDirection="root")
         ion-icon(slot='icon-only', name='arrow-round-back')
     ion-title Search
 ion-content

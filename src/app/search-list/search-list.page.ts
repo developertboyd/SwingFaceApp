@@ -29,21 +29,21 @@ export class SearchListPage implements OnInit {
                 const typeObject = queryParams.type || '';
                 const rarityObject = queryParams.rarity || '';
 
-                const set = new SetQuery(setObject.split(','));
+                const set = new SetQuery(setObject);
 
-                const colorArray = colorObject.split(',');
+                const colorArray = colorObject;
                 const colorModifiers = colorArray.slice(-2);
                 const color = new TypeQuery(colorArray.slice(0, -2), new QueryModifier(this.stringToBool(colorModifiers[0]), false, this.stringToBool(colorModifiers[1])));
 
-                const producesArray = producesObject.split(',');
+                const producesArray = producesObject;
                 const producesModifiers = producesArray.slice(-2);
                 const produces = new TypeQuery(producesArray.slice(0, -2), new QueryModifier(this.stringToBool(producesModifiers[0]), false, this.stringToBool(producesModifiers[1])));
 
-                const typeArray = typeObject.split(',');
+                const typeArray = typeObject;
                 const typeModifiers = typeArray.slice(-2);
                 const type = new TypeQuery(typeArray.slice(0, -2), new QueryModifier(this.stringToBool(typeModifiers[0]), false, this.stringToBool(typeModifiers[1])));
 
-                const rarity = new RarityQuery(rarityObject.split(','));
+                const rarity = new RarityQuery(rarityObject);
 
                 this.cardQuery = new CardQuery({
                     textSearch,

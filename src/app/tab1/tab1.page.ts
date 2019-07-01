@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {Storage} from '@ionic/storage';
 import {NavController} from '@ionic/angular';
 import {Router} from '@angular/router';
-import {IonicSelectableComponent} from 'ionic-selectable';
 import {HttpClient} from '@angular/common/http';
 
 @Component({
@@ -13,13 +12,14 @@ import {HttpClient} from '@angular/common/http';
 export class Tab1Page implements OnInit {
     cards: [any];
     sets: [any];
-    textSearch: string;
     port: [];
-    set: [];
-    color: [];
-    produces: [];
-    type: [];
-    rarity: [];
+    textSearch = '';
+    color = [];
+    produces = [];
+    type = [];
+    rarity = [];
+
+    querySearch: any;
 
     constructor(private navCtrl: NavController, private storage: Storage, private router: Router, private http: HttpClient) {
     }
@@ -28,6 +28,7 @@ export class Tab1Page implements OnInit {
         this.http.get('assets/sets/SetList.json').subscribe((data: any) => {
             this.sets = data;
         });
+        this.querySearch = {};
         this.textSearch = '';
         this.port = [];
         this.color = [];
@@ -36,33 +37,19 @@ export class Tab1Page implements OnInit {
         this.rarity = [];
     }
 
-    setChange(event: {
-        component: IonicSelectableComponent,
-        value: any
-    }) {
-        let codes = [];
-        this.port.forEach((set) => {
-            codes.push(set.code);
-        });
-        this.set = codes;
-    }
+    formChange() {
+        this.querySearch = {};
+        if (this.textSearch !== '') {
+            this.querySearch.textSearch = this.textSearch;
+        }
 
-    search() {
-        const queryParams = {
-            textSearch: this.textSearch,
-            set: this.set.join(),
-            color: this.color.join(),
-            produces: this.produces.join(),
-            type: this.type.join(),
-            rarity: this.rarity.join(),
-        };
-
-        this.router.navigate(['/search-list'], {queryParams}).then((e) => {
-            if (e) {
-                console.log('Navigation is successful!');
-            } else {
-                console.log('Navigation has failed!');
-            }
-        });
+        if (this.port.length > 0) {
+            let codes: any[] = [];
+            this.port.forEach((set: any) => {
+                codes.push(set.code);
+            });
+            this.querySearch.set = codes;
+        }
+        console.log(this.querySearch);
     }
 }
