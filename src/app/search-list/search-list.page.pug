@@ -1,0 +1,9 @@
+ion-header
+  ion-toolbar
+    ion-buttons(slot='secondary')
+      ion-button(href='/')
+        ion-icon(slot='icon-only', name='arrow-round-back')
+    ion-title Search
+ion-content
+  ion-list
+    ion-item(*ngFor="let card of cards; let i = index") {{card.name}}

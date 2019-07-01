@@ -27,7 +27,12 @@ export class CardQuery {
     rarity: {
         values: [string]
     };
-    constructor(private search: string) {
-        this.textSearch = search;
+    constructor(private query: any) {
+        this.textSearch = query.textSearch;
+        this.set.values = query.set;
+        this.color = query.color;
+        this.produces = query.produces;
+        this.type = query.type;
+        this.rarity = query.rarity;
     }
 }

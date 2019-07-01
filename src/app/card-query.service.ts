@@ -11,9 +11,10 @@ export class CardQueryService {
     }
 
     getCards(query: CardQuery) {
+        console.log(query);
         return this.storage.get('AllCards').then((cards) => {
             let filteredCards = cards.filter((card) => {
-                return query.textSearch === card.name;
+                return card.name.indexOf(query.textSearch) >= 0;
             });
             return filteredCards;
         });

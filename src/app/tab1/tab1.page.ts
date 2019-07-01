@@ -1,28 +1,60 @@
 import {Component, OnInit} from '@angular/core';
+import {Storage} from '@ionic/storage';
 import {CardQueryService} from '../card-query.service';
-import {CardQuery} from '../card-query';
+import {NavController} from '@ionic/angular';
 
 @Component({
-  selector: 'app-tab1',
-  templateUrl: 'tab1.page.pug',
-  styleUrls: ['tab1.page.scss']
+    selector: 'app-tab1',
+    templateUrl: 'tab1.page.pug',
+    styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit {
-  cards: [any];
-  textSearch: string;
+    cards: [any];
+    textSearch: string;
+    set: [];
+    color: [];
+    produces: [];
+    type: [];
+    rarity: [];
 
-  constructor(private cardQueryService: CardQueryService) {}
+    constructor(private cardQueryService: CardQueryService, private navCtrl: NavController, private storage: Storage) {
+    }
 
-  ngOnInit(): void {
-    this.cardQueryService.getCards(new CardQuery('Abrade')).then((filteredCards) => {
-      this.cards = filteredCards;
-    });
-  }
+    ngOnInit(): void {
+        this.storage.get('lastSearch').then((lastSearch) => {
+            if (lastSearch) {
+                this.textSearch = lastSearch.textSearch || '';
+                this.set = lastSearch.set || [];
+                this.color = lastSearch.color || [];
+                this.produces = lastSearch.produces || [];
+                this.type = lastSearch.type || [];
+                this.rarity = lastSearch.rarity || [];
+            } else {
+                this.textSearch = '';
+                this.set = [];
+                this.color = [];
+                this.produces = [];
+                this.type = [];
+                this.rarity = [];
+            }
+        });
+    }
 
-  updateFilter() {
-    this.cardQueryService.getCards(new CardQuery(this.textSearch)).then((filteredCards) => {
-      this.cards = filteredCards;
-    });
-  }
+    search() {
+        let queryParams = {
+            textSearch: this.textSearch,
+            set: this.set.join(),
+            color: this.color.join(),
+            produces: this.produces.join(),
+            type: this.type.join(),
+            rarity: this.rarity.join(),
+        };
 
+        this.storage.set('lastSearch', queryParams);
+        this.navCtrl.navigateForward(
+            ['search-list'],
+            {
+                queryParams
+            });
+    }
 }
