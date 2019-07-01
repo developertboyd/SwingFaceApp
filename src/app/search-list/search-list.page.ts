@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {CardQuery} from '../card-query';
+import {ActivatedRoute, Router} from '@angular/router';
+import {CardQuery, QueryModifier, RarityQuery, SetQuery, TypeQuery} from '../card-query';
 import {NavController} from '@ionic/angular';
 import {CardQueryService} from '../card-query.service';
 
@@ -13,7 +13,7 @@ export class SearchListPage implements OnInit {
     cards: any;
     cardQuery: CardQuery;
 
-    constructor(private route: ActivatedRoute, private navCtrl: NavController, private cardQueryService: CardQueryService) {
+    constructor(private route: ActivatedRoute, private navCtrl: NavController, private cardQueryService: CardQueryService, private router: Router) {
     }
 
     ngOnInit() {
@@ -29,39 +29,22 @@ export class SearchListPage implements OnInit {
                 const typeObject = queryParams.type || '';
                 const rarityObject = queryParams.rarity || '';
 
-                const set = {
-                    values: setObject.split(',')
-                };
+                const set = new SetQuery(setObject.split(','));
+
                 const colorArray = colorObject.split(',');
                 const colorModifiers = colorArray.slice(-2);
-                const color = {
-                    values: colorArray.slice(0, -2),
-                    modifiers: {
-                        and: colorModifiers[0],
-                        only: colorModifiers[1]
-                    }
-                };
+                const color = new TypeQuery(colorArray.slice(0, -2), new QueryModifier(this.stringToBool(colorModifiers[0]), false, this.stringToBool(colorModifiers[1])));
+
                 const producesArray = producesObject.split(',');
                 const producesModifiers = producesArray.slice(-2);
-                const produces = {
-                    values: producesArray.slice(0, -2),
-                    modifiers: {
-                        and: producesModifiers[0],
-                        only: producesModifiers[1]
-                    }
-                };
+                const produces = new TypeQuery(producesArray.slice(0, -2), new QueryModifier(this.stringToBool(producesModifiers[0]), false, this.stringToBool(producesModifiers[1])));
+
                 const typeArray = typeObject.split(',');
                 const typeModifiers = typeArray.slice(-2);
-                const type = {
-                    values: typeArray.slice(0, -2),
-                    modifiers: {
-                        and: typeModifiers[0],
-                        only: typeModifiers[1]
-                    }
-                };
-                const rarity = {
-                    values: rarityObject.split(',')
-                };
+                const type = new TypeQuery(typeArray.slice(0, -2), new QueryModifier(this.stringToBool(typeModifiers[0]), false, this.stringToBool(typeModifiers[1])));
+
+                const rarity = new RarityQuery(rarityObject.split(','));
+
                 this.cardQuery = new CardQuery({
                     textSearch,
                     set,
@@ -78,6 +61,17 @@ export class SearchListPage implements OnInit {
     }
 
     back() {
-        this.navCtrl.navigateRoot('/tabs/tab1');
+        this.router.navigate(['/tabs/tab1']).then((e) => {
+            if (e) {
+                console.log('Navigation is successful!');
+            } else {
+                console.log('Navigation has failed!');
+            }
+        });
+    }
+
+    private stringToBool(str: string) {
+        const ret = str === 'true';
+        return ret;
     }
 }

@@ -17,11 +17,7 @@ ion-content
       ion-label Category Filters
     ion-item
       ion-label Set
-      ion-select(multiple='true', [(ngModel)]="set")
-        ion-select-option(value='ravnica') Ravnica
-        ion-select-option(value='ixilan') Ixilan
-        ion-select-option(value='kaladesh') Kaladesh
-        ion-select-option(value='m20') Magic Core 2020
+      ionic-selectable([(ngModel)]='port', [items]='sets', itemValueField='code', itemTextField='name', [isMultiple]='true', [canSearch]='true', (onChange)='setChange($event)')
     ion-item
       ion-label Color
       ion-select(multiple='true', [(ngModel)]="color")

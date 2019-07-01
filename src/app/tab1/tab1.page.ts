@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Storage} from '@ionic/storage';
-import {CardQueryService} from '../card-query.service';
 import {NavController} from '@ionic/angular';
+import {Router} from '@angular/router';
+import {IonicSelectableComponent} from 'ionic-selectable';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
     selector: 'app-tab1',
@@ -10,38 +12,43 @@ import {NavController} from '@ionic/angular';
 })
 export class Tab1Page implements OnInit {
     cards: [any];
+    sets: [any];
     textSearch: string;
+    port: [];
     set: [];
     color: [];
     produces: [];
     type: [];
     rarity: [];
 
-    constructor(private cardQueryService: CardQueryService, private navCtrl: NavController, private storage: Storage) {
+    constructor(private navCtrl: NavController, private storage: Storage, private router: Router, private http: HttpClient) {
     }
 
     ngOnInit(): void {
-        this.storage.get('lastSearch').then((lastSearch) => {
-            if (lastSearch) {
-                this.textSearch = lastSearch.textSearch || '';
-                this.set = lastSearch.set || [];
-                this.color = lastSearch.color || [];
-                this.produces = lastSearch.produces || [];
-                this.type = lastSearch.type || [];
-                this.rarity = lastSearch.rarity || [];
-            } else {
-                this.textSearch = '';
-                this.set = [];
-                this.color = [];
-                this.produces = [];
-                this.type = [];
-                this.rarity = [];
-            }
+        this.http.get('assets/sets/SetList.json').subscribe((data: any) => {
+            this.sets = data;
         });
+        this.textSearch = '';
+        this.port = [];
+        this.color = [];
+        this.produces = [];
+        this.type = [];
+        this.rarity = [];
+    }
+
+    setChange(event: {
+        component: IonicSelectableComponent,
+        value: any
+    }) {
+        let codes = [];
+        this.port.forEach((set) => {
+            codes.push(set.code);
+        });
+        this.set = codes;
     }
 
     search() {
-        let queryParams = {
+        const queryParams = {
             textSearch: this.textSearch,
             set: this.set.join(),
             color: this.color.join(),
@@ -50,11 +57,12 @@ export class Tab1Page implements OnInit {
             rarity: this.rarity.join(),
         };
 
-        this.storage.set('lastSearch', queryParams);
-        this.navCtrl.navigateForward(
-            ['search-list'],
-            {
-                queryParams
-            });
+        this.router.navigate(['/search-list'], {queryParams}).then((e) => {
+            if (e) {
+                console.log('Navigation is successful!');
+            } else {
+                console.log('Navigation has failed!');
+            }
+        });
     }
 }
