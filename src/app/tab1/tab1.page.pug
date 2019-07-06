@@ -17,5 +17,5 @@ ion-content
       ion-label Category Filters
     ion-item
       ion-label Set
-      ionic-selectable([(ngModel)]='port', [items]='cardLoader.sets', itemValueField='code', itemTextField='name', [isMultiple]='true', [canSearch]='true', (onChange)='formChange()')
+      ionic-selectable([(ngModel)]='port', [items]='cardLoader.sets', itemValueField='code', itemTextField='name', [isMultiple]='true', [canSearch]='true', [hasVirtualScroll]="true", (onChange)='formChange()')
 
