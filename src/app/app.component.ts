@@ -26,6 +26,7 @@ export class AppComponent {
         this.platform.ready().then(() => {
             this.statusBar.styleDefault();
             this.cardLoader.loadCards().then(() => {
+                console.log('Loaded');
                 this.splashScreen.hide();
             });
         });

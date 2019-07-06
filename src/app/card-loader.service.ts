@@ -14,24 +14,16 @@ export class CardLoaderService {
 
     loadCards() {
         return new Promise((resolve, reject) => {
-            this.http.get('assets/cards/AllCards.json').subscribe((data: any) => {
-                this.http.get('assets/sets/SetList.json').subscribe((data: any) => {
-                    this.sets = data;
+            this.http.get('assets/cards/AllCards.json').subscribe((cardData: any) => {
+                this.http.get('assets/sets/SetList.json').subscribe((setData: any) => {
+                    this.sets = setData;
                     this.cards = [];
-                    Object.keys(data).forEach((key) => {
-                        this.cards.push(data[key]);
+                    Object.keys(cardData).forEach((key) => {
+                        this.cards.push(cardData[key]);
                     });
                     resolve();
                 });
             });
         });
-    }
-
-    getCards() {
-        return this.cards;
-    }
-
-    getSets() {
-        return this.sets;
     }
 }

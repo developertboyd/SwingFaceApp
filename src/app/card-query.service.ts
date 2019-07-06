@@ -12,24 +12,31 @@ export class CardQueryService {
     }
 
     getCards(query: CardQuery) {
-        const cards = this.cardLoader.getCards();
+        const allCards = this.cardLoader.cards;
         return new Promise(resolve => {
             resolve();
         }).then(() => {
-            let filteredCards = cards.filter((card) => {
-                return card.name.indexOf(query.textSearch) >= 0;
-            });
+            let filteredCards = allCards;
+            console.log(query);
 
-            filteredCards = cards.filter((card) => {
-                let ret = false;
-                query.set.values.forEach((setQuery) => {
-                    if (card.printings.includes(setQuery)) {
-                        ret = true;
-                    }
+            if (query.textSearch !== '') {
+                filteredCards = filteredCards.filter((card) => {
+                    return card.name.indexOf(query.textSearch) >= 0;
                 });
-                return ret;
-            });
-            console.log(filteredCards);
+            }
+
+            if (query.set.values.length > 0) {
+                filteredCards = filteredCards.filter((card) => {
+                    let ret = false;
+                    query.set.values.forEach((setQuery) => {
+                        if (card.printings.includes(setQuery)) {
+                            ret = true;
+                        }
+                    });
+                    return ret;
+                });
+            }
+
             return filteredCards;
         });
     }

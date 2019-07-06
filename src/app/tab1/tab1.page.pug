@@ -12,10 +12,10 @@ ion-content
     ion-list-header
       ion-label Free Text Search
     ion-item
-      ion-input(placeholder="Search card body...", [(ngModel)]="textSearch", (onChange)='formChange()')
+      ion-input(placeholder="Search card body...", [(ngModel)]="textSearch", (input)='formChange()')
     ion-list-header
       ion-label Category Filters
     ion-item
       ion-label Set
-      ionic-selectable([(ngModel)]='port', [items]='sets', itemValueField='code', itemTextField='name', [isMultiple]='true', [canSearch]='true', (onChange)='formChange()')
+      ionic-selectable([(ngModel)]='port', [items]='cardLoader.sets', itemValueField='code', itemTextField='name', [isMultiple]='true', [canSearch]='true', (onChange)='formChange()')
 

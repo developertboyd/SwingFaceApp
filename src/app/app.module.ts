@@ -11,6 +11,7 @@ import {IonicSelectableModule} from 'ionic-selectable';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
+import {OrderModule} from 'ngx-order-pipe';
 
 @NgModule({
     declarations: [AppComponent],

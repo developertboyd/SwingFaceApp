@@ -26,7 +26,6 @@ export class Tab1Page implements OnInit {
     }
 
     ngOnInit(): void {
-        this.sets = this.cardLoader.getSets();
         this.querySearch = {};
         this.textSearch = '';
         this.port = [];
@@ -39,6 +38,7 @@ export class Tab1Page implements OnInit {
     formChange() {
         this.querySearch = {};
         if (this.textSearch !== '') {
+            console.log('CHANGING TEXT')
             this.querySearch.textSearch = this.textSearch;
         }
 

@@ -21,7 +21,6 @@ export class SearchListPage implements OnInit {
     }
 
     ngOnInit() {
-
         this.route
             .queryParams
             .subscribe((queryParams) => {
