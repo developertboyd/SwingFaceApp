@@ -1,18 +1,21 @@
 import {Injectable} from '@angular/core';
 import {Storage} from '@ionic/storage';
 import {CardQuery} from './card-query';
+import {CardLoaderService} from './card-loader.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CardQueryService {
 
-    constructor(private storage: Storage) {
+    constructor(private storage: Storage, private cardLoader: CardLoaderService) {
     }
 
     getCards(query: CardQuery) {
-        console.log(query);
-        return this.storage.get('AllCards').then((cards) => {
+        const cards = this.cardLoader.getCards();
+        return new Promise(resolve => {
+            resolve();
+        }).then(() => {
             let filteredCards = cards.filter((card) => {
                 return card.name.indexOf(query.textSearch) >= 0;
             });
@@ -26,6 +29,7 @@ export class CardQueryService {
                 });
                 return ret;
             });
+            console.log(filteredCards);
             return filteredCards;
         });
     }

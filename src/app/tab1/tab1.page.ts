@@ -3,6 +3,7 @@ import {Storage} from '@ionic/storage';
 import {NavController} from '@ionic/angular';
 import {Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
+import {CardLoaderService} from '../card-loader.service';
 
 @Component({
     selector: 'app-tab1',
@@ -21,13 +22,11 @@ export class Tab1Page implements OnInit {
 
     querySearch: any;
 
-    constructor(private navCtrl: NavController, private storage: Storage, private router: Router, private http: HttpClient) {
+    constructor(private navCtrl: NavController, private storage: Storage, private router: Router, private http: HttpClient, private cardLoader: CardLoaderService) {
     }
 
     ngOnInit(): void {
-        this.http.get('assets/sets/SetList.json').subscribe((data: any) => {
-            this.sets = data;
-        });
+        this.sets = this.cardLoader.getSets();
         this.querySearch = {};
         this.textSearch = '';
         this.port = [];

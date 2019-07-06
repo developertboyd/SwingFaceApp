@@ -13,7 +13,11 @@ export class SearchListPage implements OnInit {
     cards: any;
     cardQuery: CardQuery;
 
-    constructor(private route: ActivatedRoute, private navCtrl: NavController, private cardQueryService: CardQueryService, private router: Router) {
+    constructor(
+        private route: ActivatedRoute,
+        private navCtrl: NavController,
+        private cardQueryService: CardQueryService,
+        private router: Router) {
     }
 
     ngOnInit() {
