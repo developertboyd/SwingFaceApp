@@ -8,6 +8,7 @@ ion-header
         ion-icon(slot='icon-only', name='search')
     ion-title Search
 ion-content
+  ion-button((click)="logStorage()") Log
   ion-list
     ion-list-header
       ion-label Free Text Search
@@ -17,5 +18,5 @@ ion-content
       ion-label Category Filters
     ion-item
       ion-label Set
-      ionic-selectable([(ngModel)]='port', [items]='cardLoader.sets', itemValueField='code', itemTextField='name', [isMultiple]='true', [canSearch]='true', [hasVirtualScroll]="true", (onChange)='formChange()')
+      ionic-selectable([(ngModel)]='port', [items]='sets', itemValueField='code', itemTextField='name', [isMultiple]='true', [canSearch]='true', [hasVirtualScroll]="true", (onChange)='formChange()')
 

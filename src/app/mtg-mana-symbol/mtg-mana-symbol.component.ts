@@ -29,7 +29,6 @@ export class MtgManaSymbolComponent implements OnInit, OnChanges {
 
     ngOnChanges() {
         this.manaCost = this.manaCostInput;
-        console.log(this.manaCost);
     }
 
     manaSymbol(symbol) {

@@ -12,7 +12,7 @@ import {CardLoaderService} from '../card-loader.service';
 })
 export class Tab1Page implements OnInit {
     cards: [any];
-    sets: [any];
+    sets: any[];
     port: [];
     textSearch = '';
     color = [];
@@ -33,12 +33,23 @@ export class Tab1Page implements OnInit {
         this.produces = [];
         this.type = [];
         this.rarity = [];
+        this.cardLoader.getSets().then((sets: any[]) => {
+            console.log(sets);
+            this.sets = sets;
+        });
+    }
+
+    logStorage() {
+        this.storage.length().then((response) => {
+            console.log("Total Cards");
+            console.log(response);
+        });
     }
 
     formChange() {
         this.querySearch = {};
         if (this.textSearch !== '') {
-            console.log('CHANGING TEXT')
+            console.log('CHANGING TEXT');
             this.querySearch.textSearch = this.textSearch;
         }
 
